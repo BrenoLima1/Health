@@ -8,8 +8,6 @@ export const styles = StyleSheet.create({
       height: '20%',
       backgroundColor: '#e0e5e5',
       alignItems: 'center',
-      borderBottomLeftRadius: 30,
-      borderBottomRightRadius: 30
     },
 
     textTitle: {
@@ -50,8 +48,9 @@ export const styles = StyleSheet.create({
       borderRadius: 50,
       alignItems: 'center',
       justifyContent: 'center',
-      width: '90%',
       height: 50,
+      marginLeft: 8,
+      marginRight: 8,
       backgroundColor: '#f36060',
     },
 
@@ -61,12 +60,34 @@ export const styles = StyleSheet.create({
     },
 
     resultIMC: {
-      marginTop: 15,
-      paddingTop: 60,
+      marginTop: -15,
+      paddingTop: '10%',
       borderRadius: 50,
       alignItems :'center',
       fontSize: 30,
       textAlign:'center',
-      color: '#023333'
+      color: '#ff0000'
+    },
+
+    errorMessage: {
+      fontSize: 10,
+      color: '#ff0000'
+    },
+
+    shareButton: {
+      flexDirection: 'row',
+      borderRadius: 20,
+      width: 200,
+      height: '15%',
+      justifyContent: 'center',
+      alignItems: 'center',
+      textAlign: 'center',
+      backgroundColor: '#c7eb84',
+    },
+
+    textShare: {
+      color: '#fff',
+      textAlign: 'center',
+      fontSize: 20
     }
   });

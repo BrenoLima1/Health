@@ -1,5 +1,12 @@
 import react, {useState} from "react";
-import {TextInput, Text, View, Button, TouchableOpacity}  from "react-native";
+import { TextInput,
+        Text,
+        View,
+        TouchableOpacity,
+        Vibration,
+        Keyboard,
+        Pressable
+        } from "react-native";
 import ResultIMC from "./ResultIMC";
 import { styles } from "./style";
 
@@ -9,41 +16,53 @@ function Form() {
     const [messageIMC, setMessageIMC ] = useState('Preencha o peso e a altura');
     const [imc, setImc] = useState(null);
     const [textButton, setTextButton] = useState('Calcular');
+    const [errorMessage, setErrorMessage] = useState(null);
 
     function imcCalculator() {
-        const calculatedImc = weight / (height * height);
+        let heightFormat = height.replace(',', '.');
+        const calculatedImc = weight / (heightFormat * heightFormat);
         const formattedImc = calculatedImc.toFixed(2);
+
         setImc(formattedImc);
+
         return formattedImc;
     }
 
-
     function validationIMC(height, weight) {
         if (!height || !weight) {
+            Vibration.vibrate();
+            setErrorMessage('Campo obrigatório*');
             setMessageIMC("Preencha o peso e a altura");
             setTextButton('Calcular')
+            setErrorMessage('Campo obrigatório*');
+            setImc(null);
+            return;
         } else {
+            Keyboard.dismiss();
+            setErrorMessage(null);
             let resultIMC = imcCalculator();
 
             if (resultIMC < 18.5) {
-                setMessageIMC(`Seu IMC é ${resultIMC}, você está abaixo do Peso Normal.`);
+                setMessageIMC(`Você está abaixo do Peso Normal.`);
             } else if (resultIMC >= 18.5 && resultIMC <= 24.9) {
-                setMessageIMC(`Seu IMC é ${resultIMC}, você está no Peso Normal.`);
+                setMessageIMC(`Você está no Peso Normal.`);
             } else if (resultIMC > 24.9 && resultIMC <= 29.9) {
-                setMessageIMC(`Seu IMC é ${resultIMC}, você está com Sobrepeso.`);
+                setMessageIMC(`Você está com Sobrepeso.`);
             } else if (resultIMC > 29.9 && resultIMC <= 34.9) {
-                setMessageIMC(`Seu IMC é ${resultIMC}, você está em Obesidade Grau 1.`);
+                setMessageIMC(`Você está em Obesidade Grau 1.`);
             } else {
-                setMessageIMC(`Seu IMC é ${resultIMC}, você está em Obesidade Grau 2.`);
+                setMessageIMC(`Você está em Obesidade Grau 2.`);
             }
-            setTextButton('Recalcular')
+            setTextButton('Recalcular');
+            return;
         }
     }
 
     return(
-        <View style={styles.formContext}>
+            <Pressable style={styles.formContext} onPress={Keyboard.dismiss}>
             <View style={styles.form}>
                 <Text style={styles.formLabel}>Altura</Text>
+                <Text style={styles.errorMessage}>{errorMessage}</Text>
                 <TextInput
                 style={styles.input}
                 placeholder = 'Ex. 1.75'
@@ -52,6 +71,7 @@ function Form() {
                 onChangeText={e => setHeight(e)}
                 ></TextInput>
                 <Text style={styles.formLabel}>Peso</Text>
+                <Text style={styles.errorMessage}>{errorMessage}</Text>
                 <TextInput style={styles.input}
                 placeholder = 'Ex. 75.33'
                 keyboardType = 'numeric'
@@ -67,7 +87,7 @@ function Form() {
                 </TouchableOpacity>
             </View>
             <ResultIMC messageResultIMC = {messageIMC} resultIMC = {imc}/>
-        </View>
+        </Pressable>
     );
 }
 
