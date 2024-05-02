@@ -8,6 +8,8 @@ export const styles = StyleSheet.create({
       height: '20%',
       backgroundColor: '#e0e5e5',
       alignItems: 'center',
+      borderBottomLeftRadius: 30,
+      borderBottomRightRadius: 30
     },
 
     textTitle: {
@@ -89,5 +91,26 @@ export const styles = StyleSheet.create({
       color: '#fff',
       textAlign: 'center',
       fontSize: 20
+    },
+
+    exhibitionResultIMC: {
+      width: '100%',
+      height: '50%'
+    },
+
+    listIMCs: {
+      marginTop: 5,
+    },
+
+    resultIMCItem: {
+      fontSize: 24,
+      color: 'red',
+      height: 50,
+      width: '100%',
+      paddingRight: 20
+    },
+
+    textResultIMCItem: {
+      fontSize: 14,
     }
   });
